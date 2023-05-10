@@ -514,7 +514,7 @@ ddsPLSCpp bootstrap_pls_CT_Cpp(const Eigen::MatrixXd X_init,const Eigen::MatrixX
 
   Eigen::VectorXd vars_expl(N_simu_lams), vars_expl_h(N_simu_lams), Q2(N_simu_lams), Q2_all(N_simu_lams);
   for (int iLam = 0u; iLam < N_simu_lams; ++iLam){
-    if (test_previous_ok==true & lambdas(iLam)>=lambda0(r)) {
+    if ( (test_previous_ok==true) & (lambdas(iLam)>=lambda0(r)) ) {
       lam_r(0) = lambdas(iLam);
       if (doBoot == false){
         lam_r(0) = lambdas(0);
