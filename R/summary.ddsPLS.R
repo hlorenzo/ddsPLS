@@ -3,6 +3,16 @@
 #' @param x A ddsPLS object.
 #' @param \ldots arguments to be passed to methods, such as graphical parameters.
 #'
+#' @examples
+#' n <- 100 ; d <- 2 ; p <- 20 ; q <- 2
+#' phi <- matrix(rnorm(n*d),n,d)
+#' a <- rep(1,p/4) ; b <- rep(1,p/2)
+#' X <- phi%*%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow = TRUE) +
+#' matrix(rnorm(n*p,sd = 1/4),n,p)
+#' Y <- phi%*%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
+#' matrix(rnorm(n*q,sd = 1/4),n,q)
+#' print(res)
+#'
 #' @export
 #' @rdname print.ddsPLS
 #' @name print.ddsPLS
@@ -26,12 +36,19 @@ print.ddsPLS <- function(x,...)
 #' Function to sum up bootstrap performance results of the ddsPLS algorithm
 #'
 #' @param object A ddsPLS object.
-#' @param return Wether or not to return the printed values, default to FALSE.
-#' @param plotSelection boolean. Whether plot the selection variables.
-#' @param las interger. Parameter for angle of variable names.
-#' @param cex.names real positive. Which factor zomm the variable names.
+#' @param returnValues boolean. Wether or not to return the printed values, default to FALSE.
 #' @param digits integer indicating the number of decimal places (round) to be used.
 #' @param \ldots arguments to be passed to methods, such as graphical parameters.
+#'
+#' @examples
+#' n <- 100 ; d <- 2 ; p <- 20 ; q <- 2
+#' phi <- matrix(rnorm(n*d),n,d)
+#' a <- rep(1,p/4) ; b <- rep(1,p/2)
+#' X <- phi%*%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow = TRUE) +
+#' matrix(rnorm(n*p,sd = 1/4),n,p)
+#' Y <- phi%*%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
+#' matrix(rnorm(n*q,sd = 1/4),n,q)
+#' summary(res,)
 #'
 #' @export
 #' @rdname summary.ddsPLS
@@ -40,8 +57,7 @@ print.ddsPLS <- function(x,...)
 #' @seealso \code{\link{ddsPLS}}, \code{\link{plot.ddsPLS}}, \code{\link{predict.ddsPLS}}
 #'
 #' @useDynLib ddsPLS
-summary.ddsPLS <- function(object,return=FALSE,
-                           plotSelection=FALSE,las=1,cex.names=1,
+summary.ddsPLS <- function(object,returnValues=FALSE,
                            digits=2,...){
   cat("                      ______________\n");
   cat("                     |    ddsPLS    |\n");
@@ -145,7 +161,7 @@ summary.ddsPLS <- function(object,return=FALSE,
   }
   cat("=====================                =====================\n");
   cat("                     ================\n");
-  if(return & h_opt>0){
+  if(returnValues & h_opt>0){
     if(object$doBoot){
       out <- list(R2Q2=R2Q2,VAR=VAR,VARY=VARY,
                   VARYperComp=list(marginal=VARYCompMarg,total=VARYCompTotal))

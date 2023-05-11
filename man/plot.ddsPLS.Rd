@@ -10,7 +10,8 @@
   digits = 1,
   legend.position = "topright",
   horiz = TRUE,
-  biPlot = F,
+  biPlot = FALSE,
+  comp = c(1, 2),
   col = NULL,
   cex.names = 1,
   mar = c(5, 4, 4, 2) + 0.1,
@@ -20,9 +21,11 @@
 \arguments{
 \item{x}{A ddsPLS object}
 
-\item{type}{The type of graphics. One of "criterion" (default), "total",
+\item{type}{The type of graphics. One of "criterion" (default),
 "prop", "predict", "Q2r", "Q2", "R2r", "R2", "weightX", "weightY",
- "loadingX" or "loadingY".}
+ "loadingX" or "loadingY". The type "prop" corresponds to the proportion of
+ models with positive \eqn{Q_{r}^2} among the bootstrapped evaluations for
+ each of the to be tested values for \code{lambda}.}
 
 \item{digits}{double. Rounding of the written explained variance.}
 
@@ -32,6 +35,9 @@
 
 \item{biPlot}{boolean. Whether to plot one component versus another one.}
 
+\item{comp}{vector of two integers. Taken into account only if
+\code{biplot=TRUE}.}
+
 \item{col}{vector. Mainly to modify bars in weight plots.}
 
 \item{cex.names}{double. Size factor for variable names.}
@@ -40,8 +46,31 @@
 
 \item{\ldots}{arguments to be passed to methods, such as graphical parameters.}
 }
+\value{
+No return value, called for side effects.
+}
 \description{
 Function to plot bootstrap performance results of the ddsPLS algorithm
+}
+\examples{
+n <- 100 ; d <- 2 ; p <- 20 ; q <- 2
+phi <- matrix(rnorm(n*d),n,d)
+a <- rep(1,p/4) ; b <- rep(1,p/2)
+X <- phi\%*\%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow = TRUE) +
+matrix(rnorm(n*p,sd = 1/4),n,p)
+Y <- phi\%*\%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
+matrix(rnorm(n*q,sd = 1/4),n,q)
+res <- ddsPLS(X,Y,verbose=FALSE)
+
+## Plot criterion
+plot(res,type = "criterion")
+## Univariate weights of X, same with Y
+plot(res,type = "weightX")
+## Bivariate weights of X, same with Y
+plot(res,type = "weightX",biPlot = T)
+## Modify margins to fit the window
+plot(res,type = "weightY",mar = c(3,7,3,3))
+
 }
 \seealso{
 \code{\link{ddsPLS}}, \code{\link{predict.ddsPLS}}, \code{\link{summary.ddsPLS}}

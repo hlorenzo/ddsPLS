@@ -7,7 +7,7 @@ Description: Allows to build Data-Driven Sparse Partial Least Squares models. Mu
     Number of components and regularization coefficients are automatically set. It comes with visualization
     functions and uses 'Rcpp' functions for fast computations and 'doParallel' to parallelize cross-validation. 
     An applet has been developed to apply this procedure.
-    This is based on H Lorenzo, O Cloarec, R Thiebaut, J Saracco (2021), doi=10.1002/sam.11558.
+    This is based on H Lorenzo, O Cloarec, R Thiebaut, J Saracco (2021) <doi:10.1002/sam.11558>.
 Authors@R: c(person("Hadrien","Lorenzo", role = c("aut", "cre"),
                      email = "hadrien.lorenzo.2015@gmail.com"),
              person("Misbah","Razzaq", role = "ctb",

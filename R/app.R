@@ -1,6 +1,8 @@
-#' Applet to start ddsPLS.
+#' Applet to start ddsPLS
 #'
 #' @param ... No parameter is needed explicitly for this app.
+#'
+#' @return Nothing due to the nature of the applet.
 #'
 #' @export
 #'

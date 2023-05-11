@@ -24,8 +24,8 @@
 #'    \code{TRUE}, the ddsPLS algorithm, through bootstrap validation,
 #'     is started using \code{lambda} as a grid and \code{n_B} as
 #'   the total number of bootstrap samples to simulate per component.
-#' @param LD boolean. Wether or not to consider low dimensional dataset. If equa
-#' l to \code{TRUE}, no low value is estimated for \code{lambda} (\code{lambda0}=0). Else,
+#' @param LD boolean. Wether or not to consider low dimensional dataset. If
+#' sequal to \code{TRUE}, no low value is estimated for \code{lambda} (\code{lambda0}=0). Else,
 #' \code{lambda} is estimated thanks to in order to prevent from including too
 #' much variables in the current component.
 #' @param lambdas vector, the to be tested values for \code{lambda}.
@@ -41,7 +41,7 @@
 #' @param n_lambdas integer, the number of lambda values. Taken into account
 #' only if \code{lambdas} is \code{NULL}. Default to 100.
 #' @param lambda_roof real, the maximum value to be tested by the algorithm for
-#' \code{lambda}. THis is automatically fixed by the algorithm.
+#' \code{lambda}. This is automatically fixed by the algorithm.
 #' @param lowQ2  real, the minimum value of Q^2_B to accept the
 #' current lambda value. Default to \code{0.0}.
 #' @param NCORES integer, the number of cores used. Default to \code{1}.
@@ -49,7 +49,94 @@
 #' \code{FALSE}.
 #' @param errorMin real, not to be used.
 #'
-#' @return A ddsPLS object.
+#' @return
+#' \item{model}{a list containing the PLS parameters:}
+#' \itemize{
+#'   \item \code{$P}: Loadings for \code{X}.
+#'   \item \code{$C}: Loadings for \code{Y}.
+#'   \item \code{$t}: Scores.
+#'   \item \code{$V}: Weights for \code{Y}.
+#'   \item \code{$U}: Loadings for \code{X}.
+#'   \item \code{$U_star}: Loadings for \code{X} in original base: $U_star=U(P'U)^{-1}$.
+#'   \item \code{$B}: Regression matrix of \code{Y} on \code{X}.
+#'   \item \code{$muY}: Empirical mean of \code{Y}.
+#'   \item \code{$muX}: Empirical mean of \code{X}.
+#'   \item \code{$sdY}: Empirical standard deviation of \code{Y}.
+#'   \item \code{$sdX}: Empirical standard deviation of \code{X}.
+#' }
+#' \item{results}{a list containing the ddsPLS descriptors after bootstrap
+#' operations:}
+#' \itemize{
+#'     \item \code{$PropQ2hPos}: A list of size \code{R}+1 where \code{R} is the
+#'     evaluated number of components. Each element is a vector of length
+#'     \code{n_lambdas}. Each value is the proportion of times the \code{Q2h}
+#'     statistics is positive among the \code{n_B} estimated ddsPLS models.
+#'     \item \code{$Q2h}:  A list of size \code{R}+1 where \code{R} is the
+#'     evaluated number of components. Each element is a
+#'     \code{(n_B,n_lambdas)}-matrix. Each value is the value for the statistics
+#'      \code{Q2h}.
+#'     \item \code{$Q2}: :  A list of size \code{R}+1 where \code{R} is the
+#'     evaluated number of components. Each element is a
+#'     \code{(n_B,n_lambdas)}-matrix. Each value is the value for the statistics
+#'      \code{Q2}.
+#'     \item \code{$R2h}: :  A list of size \code{R}+1 where \code{R} is the
+#'     evaluated number of components. Each element is a
+#'     \code{(n_B,n_lambdas)}-matrix. Each value is the value for the statistics
+#'      \code{R2h}.
+#'     \item \code{$R2}: :  A list of size \code{R}+1 where \code{R} is the
+#'     evaluated number of components. Each element is a
+#'     \code{(n_B,n_lambdas)}-matrix. Each value is the value for the statistics
+#'      \code{R2}.
+#'     \item \code{$V}: Empirical means and variances of the weights for
+#'     \code{Y} for each component.
+#'     \item \code{$U}: Empirical means and variances of the weights for
+#'     \code{X} for each component.
+#'     \item \code{$U_star}: Empirical means and variances of the loadings for
+#'     \code{X} in original base for each component.
+#'     \item \code{$C}: Empirical means and variances of the loadings for
+#'     \code{Y} for each component.
+#'     \item \code{$P}: Empirical means and variances of the loadings for
+#'     \code{X} for each component.
+#'     \item \code{$t}: Empirical means and variances of the score for each
+#'     component.
+#'     \item \code{$R2mean_diff_Q2mean}: Differences of the empirical means of
+#'     the statistics R2 and Q2.
+#'     \item \code{$Q2hmean}: Empirical means of the statistic Q2h.
+#'     \item \code{$Q2mean}: Empirical means of the statistic Q2.
+#'     \item \code{$R2hmean}: Empirical means of the statistic R2h.
+#'     \item \code{$R2mean}: Empirical means of the statistic R2.
+#'     \item \code{$R2sd}: Empirical standard deviations of the statistic R2.
+#'     \item \code{$R2hsd}: Empirical standard deviations of the statistic R2h.
+#'     \item \code{$Q2sd}: Empirical standard deviations of the statistic Q2.
+#'     \item \code{$Q2hsd}: Empirical standard deviations of the statistic Q2h.
+#'     \item \code{$R2_diff_Q2sd}: Differences of the empirical standard
+#'     deviations of the statistics R2 and Q2.
+#'     \item \code{$lambdas}: Values tested for \code{lambdas}.
+#' }
+#' \item{varExplained_in_X}{a list containing the explained variances in
+#' \code{X} per component (\code{Comp}) or cumulated (\code{Cumu}).}
+#' \item{varExplained}{a list containing the explained variances in
+#' \code{Y} per component (\code{Comp}), cumulated (\code{Cumu}), or per
+#' dimension of \code{Y} separately. The three last objects detail the
+#' explained variances per dimension of \code{Y} per component
+#' (\code{PerYPerComp$Comp}) or cumulated (\code{PerYPerComp$Cumu}).}
+#' \item{R}{The evaluated number of components.}
+#' \item{lambda}{The \code{R} values evaluated for \code{lambda}.}
+#' \item{lambda_optim}{a list containing 3 matrices with boolean values
+#' corresponding to wether or not each to be tested value for \code{lambda} has
+#' been indeed tested.}
+#' \item{Q2, Q2h, R2, R2h}{vector. The \code{R} values evaluated for \code{Q2},
+#'  \code{Q2h}, \code{R2} and \code{R2h}.}
+#'  \item{lowQ2}{The input parameter of the same name.}
+#'  \item{X}{The input parameter of the same name.}
+#'  \item{doBoot}{The input parameter of the same name.}
+#'  \item{Y_est}{The estimated values for the response variable.}
+#'  \item{Y_obs}{The observed values for the response variable.}
+#'  \item{Selection}{A list of two elements of the indices corresponding with
+#'  the variables selected in \code{X} and in \code{Y}.}
+#'  \item{call}{The call given to the function.}
+#'  \item{criterion}{The input parameter of the same name.}
+#'
 #' @export list
 #' @importFrom foreach %dopar%
 #' @importFrom foreach %do%
@@ -57,20 +144,20 @@
 #' @importFrom stats cov var
 #'
 #' @examples
-#' # n <- 100 ; d <- 2 ; p <- 20 ; q <- 2
-#' # phi <- matrix(rnorm(n*d),n,d)
-#' # a <- rep(1,p/4) ; b <- rep(1,p/2)
-#' # X <- phi%*%matrix(c(1*a,0*a,0*b,
-#' #                     1*a,3*b,0*a),nrow = d,byrow = T) + matrix(rnorm(n*p),n,p)
-#' # Y <- phi%*%matrix(c(1,0,
-#' #                     0,0),nrow = d,byrow = T) + matrix(rnorm(n*q),n,q)
-#' # model_ddsPLS <- ddsPLS(X,Y,verbose=TRUE)
+#' n <- 100 ; d <- 2 ; p <- 20 ; q <- 2
+#' phi <- matrix(rnorm(n*d),n,d)
+#' a <- rep(1,p/4) ; b <- rep(1,p/2)
+#' X <- phi%*%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow = TRUE) +
+#' matrix(rnorm(n*p,sd = 1/4),n,p)
+#' Y <- phi%*%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
+#' matrix(rnorm(n*q,sd = 1/4),n,q)
+#' res <- ddsPLS(X,Y,verbose=TRUE)
 #'
 #' @seealso \code{\link{summary.ddsPLS}}, \code{\link{plot.ddsPLS}}, \code{\link{predict.ddsPLS}}
 #'
 #' @useDynLib ddsPLS
 ddsPLS <- function(X,Y,criterion="diffR2Q2",
-                   doBoot=TRUE,LD=F,
+                   doBoot=TRUE,LD=FALSE,
                    lambdas=NULL,n_B=50,n_lambdas=100,lambda_roof=NULL,
                    lowQ2=0.0,NCORES=1,errorMin=1e-9,verbose=FALSE){
   bootstrapWrap <- function(U,V,X,Y,lambdas,lambda_prev,
@@ -79,18 +166,10 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
                           R,n_B,doBoot,n,p,q,n_lambdas,lambda0.)
     res
   }
-  # get_fused <- function(sigma_k,lambda1,lambda2)
-  # {
-  #   m2 <- c(flsa(sigma_k,lambda1=0,lambda2 = lambda2))
-  #   m1 <- abs(m2)-lambda1
-  #   m1[which(m1<0)] <- 0
-  #   m1 <- m1*sign(m2)
-  #   m1
-  # }
   getLambdas <- function(xSC,ySC,n,p,q){
     getLambda0 <- function(xSC,ySC,n,p,q){
-      Sig_est <- matrix(rep(cov(xSC,ySC),n),nrow = n,byrow = T)
-      theta <- colMeans((xSC*matrix(rep(ySC,p),n,byrow = F)-Sig_est)^2)
+      Sig_est <- matrix(rep(cov(xSC,ySC),n),nrow = n,byrow = TRUE)
+      theta <- colMeans((xSC*matrix(rep(ySC,p),n,byrow = FALSE)-Sig_est)^2)
       mean(sqrt(log(max(p,q))*theta/n))
     }
     mean(unlist(lapply(1:q,function(j){getLambda0(xSC,ySC[,j],n,p,q)})))
@@ -114,8 +193,8 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
       }
       Y_init = scale(Y);
       Y_init[which(is.na(Y_init))] <- 0
-      RSS0 <- sum(scale(Y,scale = F)^2)
-      RSS0_y <- apply(Y,2,function(yy){sum(scale(yy,scale = F)^2)})
+      RSS0 <- sum(scale(Y,scale = FALSE)^2)
+      RSS0_y <- apply(Y,2,function(yy){sum(scale(yy,scale = FALSE)^2)})
       sdX <- apply(X,2,sd)
       muX <- apply(X,2,mean)
       id_na_x_mean <- which(is.na(sdX))
@@ -136,7 +215,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
         }
       }
       # Create lambda values
-      useL0 <- F
+      useL0 <- FALSE
       lambda0 <- NULL
       if(is.null(lambdas)){
         if(is.null(lambda_roof)){
@@ -149,7 +228,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
         }else{
           lambda0 <- 0
         }
-        useL0 <- T
+        useL0 <- TRUE
       }else{
         lambda0 <- 0
       }
@@ -176,7 +255,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
         Results$R2 = Results$R2h = Results$Q2 = Results$Q2h = Results$PropQ2hPos  <- list()
         Results$R2mean = Results$R2hmean = Results$Q2mean = Results$Q2hmean =
           Results$R2mean_diff_Q2mean = Results$t = Results$P = Results$C =
-          Results$U_star = Results$U = Results$V = Results$B <- list()
+          Results$U_star = Results$U = Results$V <- list()
         h <- 0 ; bestID <- 0;
         Q2_previous <- -1e9 ; bestVal <- -1e9
         if (verbose) {
@@ -200,7 +279,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
               Y_here <- Y_here - tcrossprod(tr,cr)
             }
             lambda0 <- c(lambda0,getLambdas(X_here,Y_here,n,p,q))
-            useL0 <- T
+            useL0 <- TRUE
           }
           if(!useL0) lambda0 <- rep(0,h+1)
           NCORES_w <- min(NCORES,n_B)
@@ -237,7 +316,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
           nb_ValsOk = sum(TEST)
           test_lambdas[[h+1]] <- TEST
           # resOUT <- NULL
-          test_t2 <- F
+          test_t2 <- FALSE
           if (nb_ValsOk>0){
             if(criterion=="diffR2Q2" & !LD){
               bestVal = min(Results$R2mean_diff_Q2mean[[h+1]][TEST])
@@ -289,12 +368,12 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
               U_out[,1:h] = resOUT$U[,1:h]
               V0[,1:h] = resOUT$V[,1:h]
               ## Look at variabilities in P
-              TT <- do.call(rbind,res[which(names(res)=="t")])[,c(1:n)+(bestID-1)*n,drop=F]
-              PP <- do.call(rbind,res[which(names(res)=="P")])[,c(1:p)+(bestID-1)*p,drop=F]
-              CC <- do.call(rbind,res[which(names(res)=="C")])[,c(1:q)+(bestID-1)*q,drop=F]
-              UUSSTTAARR <- do.call(rbind,res[which(names(res)=="U_star")])[,c(1:p)+(bestID-1)*p,drop=F]
-              UU <- do.call(rbind,res[which(names(res)=="U")])[,c(1:p)+(bestID-1)*p,drop=F]
-              VV <- do.call(rbind,res[which(names(res)=="V")])[,c(1:q)+(bestID-1)*q,drop=F]
+              TT <- do.call(rbind,res[which(names(res)=="t")])[,c(1:n)+(bestID-1)*n,drop=FALSE]
+              PP <- do.call(rbind,res[which(names(res)=="P")])[,c(1:p)+(bestID-1)*p,drop=FALSE]
+              CC <- do.call(rbind,res[which(names(res)=="C")])[,c(1:q)+(bestID-1)*q,drop=FALSE]
+              UUSSTTAARR <- do.call(rbind,res[which(names(res)=="U_star")])[,c(1:p)+(bestID-1)*p,drop=FALSE]
+              UU <- do.call(rbind,res[which(names(res)=="U")])[,c(1:p)+(bestID-1)*p,drop=FALSE]
+              VV <- do.call(rbind,res[which(names(res)=="V")])[,c(1:q)+(bestID-1)*q,drop=FALSE]
               for(i_B in 1:n_B){
                 sign_i_B <- sign(VV[i_B,which.max(abs(VV[i_B,]))])
                 if(sign_i_B<0){
@@ -338,8 +417,8 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
               B_out -> resOUT$B
               out0 <- list(model=list(muX=muX,muY=muY,B=B_previous),R=1);class(out0)="ddsPLS"
               out1 <- list(model=list(muX=muX,muY=muY,B=B_out),R=1);class(out1)="ddsPLS"
-              Y_est_0 <- predict(out0,X,doDiagnosis=F)$y_est
-              Y_est_1 <- predict(out1,X,doDiagnosis=F)$y_est
+              Y_est_0 <- predict(out0,X,doDiagnosis=FALSE)$Y_est
+              Y_est_1 <- predict(out1,X,doDiagnosis=FALSE)$Y_est
               cor2_0 <- unlist(lapply(1:q,function(j){
                 1-sum((Y_est_0[,j]-Y[,j])^2)/sum((muY[j]-Y[,j])^2)
               }))
@@ -388,7 +467,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
           }
           if (!test_t2 | nb_ValsOk<=0){
             if(verbose) cat(paste("                                 ...component ",h+1," not built!","\n",sep=""))
-            test = F;
+            test = FALSE;
             if(h==0){
               if(verbose){
                 if(sum(Results$Q2hmean[[h+1]]>lowQ2)==0){
@@ -454,7 +533,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
         out$doBoot <- doBoot
         class(out) <- "ddsPLS"
         if(h>0){
-          out$Y_est <- predict(out,X,doDiagnosis=F)$y_est
+          out$Y_est <- predict(out,X,doDiagnosis=FALSE)$Y_est
           out$Y_obs <- Y
           colnames(out$Y_est) = colnames(Y)
           rownames(out$model$V) = colnames(Y)
@@ -470,7 +549,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
           var_comp <- norm_comp/norm_X_tot
           out$varExplained_in_X$Comp <- var_comp*100
           out$varExplained_in_X$Cumu <- cumsum(var_comp)*100
-          out$varExplained$PerY <- varExplainedTot_y[h,,drop=F]
+          out$varExplained$PerY <- varExplainedTot_y[h,,drop=FALSE]
           out$varExplained$PerYPerComp <- list()
           out$varExplained$PerYPerComp$Comp <- varExplained_y
           out$varExplained$PerYPerComp$Cumu <- varExplainedTot_y
@@ -479,7 +558,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
           out$Selection <- list(X=which(selX==1),Y=which(selY==1))
           out$call <- call
         }else{
-          out$Y_est <- predict(out,X,doDiagnosis=F)$y_est
+          out$Y_est <- predict(out,X,doDiagnosis=FALSE)$Y_est
           out$Y_obs <- Y
           colnames(out$Y_est) = colnames(Y)
         }
@@ -495,21 +574,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
           varExplained=varExplainedTot <- rep(0,R)
           varExplained_y=varExplainedTot_y <- matrix(0,R,q)
           lambda0 <- rep(0,R)
-          # if(!is.null(gamma))
-          # {
-          #   x <- X_init
-          #   y <- Y_init
-          #   resr <- list(U=matrix(0,p,R),
-          #                V=matrix(0,q,R),
-          #                C=matrix(0,q,R),
-          #                P=matrix(0,p,R),
-          #                U_star=matrix(0,p,R),
-          #                t=matrix(0,n,R),
-          #                B=matrix(0,p,q))
-          # }
           for(r in 1:R){
-            # if (is.null(gamma))
-            # {
               resr <- modelddsPLSCpp_Rcpp(U_out,V0,X_init,Y_init,lambdas,
                                           R=r,n,p,q,lambda0)
               U_out[,r] = resr$U[,r]
@@ -539,7 +604,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
                 B_1[,j] <- B_1[,j]*sdY[j]
               }
               out1 <- list(model=list(muX=muX,muY=muY,B=B_1),R=1);class(out1)="ddsPLS"
-              Y_est_1 <- predict(out1,X,doDiagnosis=F)$y_est
+              Y_est_1 <- predict(out1,X,doDiagnosis=FALSE)$Y_est
               cor2_1 <- unlist(lapply(1:q,function(j){
                 1-sum((Y_est_1[,j]-Y[,j])^2)/sum((muY[j]-Y[,j])^2)
               }))
@@ -549,81 +614,6 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
               varExplained_y[r,] <- cor2_r*100
               varExplainedTot_y[r,] <- cor2_1*100
               B_total <- B_total + B_1
-            # }
-            # else
-            # {
-            #   coco <- NULL
-            #   for(k in 1:q)
-            #   {
-            #     coco <- cbind(coco,get_fused(c(crossprod(x,y[,k])/(n-1)),
-            #                                  lambdas[r],gamma))
-            #   }
-            #   svdd <- svd(coco,nu=r,nv=r)
-            #   ur <- svdd$u[,1]
-            #   vr <- svdd$v[,1]
-            #   resr$U[,r] <- ur
-            #   resr$V[,r] <- vr
-            #   U_out[,r] <- ur
-            #   V0[,r] <- vr
-            #   # Compute regressions
-            #   ## Compute regression on current component only
-            #   t_r <- x%*%ur#resr$t[,r]
-            #   resr$t[,r] <- t_r
-            #   normtr <- sum(t_r^2)
-            #   Pi_r <- (abs(vr)>1e-20)*1
-            #   if(normtr>1e-9)
-            #   {
-            #     pr <- crossprod(x,t_r)/normtr
-            #     cr <- crossprod(y,t_r)/normtr
-            #     for(j in 1:q){
-            #       if(Pi_r[j]==0){
-            #         cr[j,] <- 0
-            #       }
-            #     }
-            #   }
-            #   else
-            #   {
-            #     pr <- rep(0,p)
-            #     cr <- rep(0,q)
-            #   }
-            #   resr$P[,r] <- pr
-            #   resr$U_star[,1:r] <- resr$U[,1:r]%*%solve(crossprod(resr$P[,1:r],resr$U[,1:r]))
-            #   resr$C[,r] <- cr
-            #   Y_est_r <- tcrossprod(t_r)%*%Y/sum(t_r^2)
-            #   for(j in 1:q){
-            #     if(Pi_r[j]==0){
-            #       Y_est_r[,j] <- muY[j]
-            #     }else{
-            #       Y_est_r[,j] <- Y_est_r[,j] + muY[j]
-            #     }
-            #   }
-            #   cor2_r <- unlist(lapply(1:q,function(j){
-            #     1-sum((Y_est_r[,j]-Y[,j])^2)/sum((muY[j]-Y[,j])^2)
-            #   }))
-            #   B_1 <- ur%*%solve(crossprod(pr,ur))%*%t(cr)
-            #   for (i in 1:p){
-            #     if(sdX[i]>errorMin){
-            #       B_1[i,] <- B_1[i,]/sdX[i]
-            #     }
-            #   }
-            #   for (j in 1:q){
-            #     B_1[,j] <- B_1[,j]*sdY[j]
-            #   }
-            #   out1 <- list(model=list(muX=muX,muY=muY,B=B_1),R=1)
-            #   class(out1)="ddsPLS"
-            #   Y_est_1 <- predict(out1,X,doDiagnosis=F)$y_est
-            #   cor2_1 <- unlist(lapply(1:q,function(j){
-            #     1-sum((Y_est_1[,j]-Y[,j])^2)/sum((muY[j]-Y[,j])^2)
-            #   }))
-            #   # Compute explained variances
-            #   varExplained[r] <- mean(cor2_r)*100
-            #   varExplainedTot[r] <- mean(cor2_1)*100
-            #   varExplained_y[r,] <- cor2_r*100
-            #   varExplainedTot_y[r,] <- cor2_1*100
-            #   B_total <- B_total + B_1
-            #   x <- x - tcrossprod(t_r,pr)
-            #   y <- y - tcrossprod(t_r,cr)
-            # }
           }
           resr$B <- B_total
           idBad <- which(sqrt(colSums(resr$t^2))<1e-9)
@@ -662,7 +652,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
         out$varExplained$PerYPerComp$Comp <- varExplained_y
         out$varExplained$PerYPerComp$Cumu <- varExplainedTot_y
         out$X <- X
-        out$Y_est <- predict(out,X,doDiagnosis=F)$y_est
+        out$Y_est <- predict(out,X,doDiagnosis=FALSE)$Y_est
         out$Y_obs <- Y
         colnames(out$Y_est) = colnames(Y)
         rownames(out$model$V) = colnames(Y)

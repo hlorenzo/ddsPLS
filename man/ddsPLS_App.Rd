@@ -2,13 +2,16 @@
 % Please edit documentation in R/app.R
 \name{ddsPLS_App}
 \alias{ddsPLS_App}
-\title{Applet to start ddsPLS.}
+\title{Applet to start ddsPLS}
 \usage{
 ddsPLS_App(...)
 }
 \arguments{
 \item{...}{No parameter is needed explicitly for this app.}
 }
+\value{
+Nothing due to the nature of the applet.
+}
 \description{
-Applet to start ddsPLS.
+Applet to start ddsPLS
 }
