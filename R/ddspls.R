@@ -96,6 +96,10 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
     mean(unlist(lapply(1:q,function(j){getLambda0(xSC,ySC[,j],n,p,q)})))
   }
   if(!is.na(sum(X))){
+    if(!is.matrix(Y))
+    {
+      Y <- t(t(Y))
+    }
     if(criterion %in% c("diffR2Q2","Q2")){
       call <- match.call()
       n <- nrow(Y)
