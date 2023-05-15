@@ -11,6 +11,9 @@
 
 \item{\ldots}{arguments to be passed to methods, such as graphical parameters.}
 }
+\value{
+No return value, called for side effects
+}
 \description{
 Function to sum up bootstrap performance results of the ddsPLS algorithm
 }
@@ -22,6 +25,7 @@ X <- phi\%*\%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow = TRUE) +
 matrix(rnorm(n*p,sd = 1/4),n,p)
 Y <- phi\%*\%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
 matrix(rnorm(n*q,sd = 1/4),n,q)
+res <- ddsPLS(X,Y,verbose=FALSE)
 print(res)
 
 }

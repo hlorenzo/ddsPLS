@@ -34,7 +34,7 @@
 #' ## Univariate weights of X, same with Y
 #' plot(res,type = "weightX")
 #' ## Bivariate weights of X, same with Y
-#' plot(res,type = "weightX",biPlot = T)
+#' plot(res,type = "weightX",biPlot = TRUE)
 #' ## Modify margins to fit the window
 #' plot(res,type = "weightY",mar = c(3,7,3,3))
 #'

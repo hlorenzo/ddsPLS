@@ -11,7 +11,10 @@
 #' matrix(rnorm(n*p,sd = 1/4),n,p)
 #' Y <- phi%*%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
 #' matrix(rnorm(n*q,sd = 1/4),n,q)
+#' res <- ddsPLS(X,Y,verbose=FALSE)
 #' print(res)
+#'
+#' @return  No return value, called for side effects
 #'
 #' @export
 #' @rdname print.ddsPLS
@@ -48,7 +51,10 @@ print.ddsPLS <- function(x,...)
 #' matrix(rnorm(n*p,sd = 1/4),n,p)
 #' Y <- phi%*%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
 #' matrix(rnorm(n*q,sd = 1/4),n,q)
-#' summary(res,)
+#' res <- ddsPLS(X,Y,verbose=FALSE)
+#' summary(res,digits=5)
+#'
+#' @return  No return value, called for side effects
 #'
 #' @export
 #' @rdname summary.ddsPLS

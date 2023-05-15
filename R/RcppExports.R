@@ -53,6 +53,8 @@ modelddsPLSCpp_Rcpp <- function(U, V, X, Y, lambdas, R, n, p, q, lambda0) {
 #' @param N_lambdas The number of to be tested values for lambda.
 #' @param lambda0 The minimum value to be checked in lambdas.
 #'
+#' @return The bootstrapped statistics
+#'
 bootstrap_Rcpp <- function(U, V, X, Y, lambdas, lambda_prev, R, n_B, doBoot, n, p, q, N_lambdas, lambda0) {
     .Call(`_ddsPLS_bootstrap_Rcpp`, U, V, X, Y, lambdas, lambda_prev, R, n_B, doBoot, n, p, q, N_lambdas, lambda0)
 }

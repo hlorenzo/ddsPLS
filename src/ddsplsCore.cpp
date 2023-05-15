@@ -692,6 +692,8 @@ Rcpp::List  modelddsPLSCpp_Rcpp(const Eigen::MatrixXd U,const Eigen::MatrixXd V,
 //' @param N_lambdas The number of to be tested values for lambda.
 //' @param lambda0 The minimum value to be checked in lambdas.
 //'
+//' @return The bootstrapped statistics
+//'
 // [[Rcpp::export]]
 Rcpp::List  bootstrap_Rcpp(const Eigen::MatrixXd U,const Eigen::MatrixXd V,
                            const Eigen::MatrixXd X,const Eigen::MatrixXd Y,

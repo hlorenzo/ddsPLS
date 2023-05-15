@@ -77,11 +77,11 @@
 #' X <- phi%*%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow = TRUE) +
 #' matrix(rnorm(n*p,sd = 1/4),n,p)
 #' X_test <- phi_test%*%matrix(c(1*a,0*a,0*b,1*a,3*b,0*a),nrow = d,byrow=TRUE) +
-#'  matrix(rnorm(n_test*p,sd = 1/4),n_test,p)
+#' matrix(rnorm(n_test*p,sd = 1/4),n_test,p)
 #' Y <- phi%*%matrix(c(1,0,0,0),nrow = d,byrow = TRUE) +
 #' matrix(rnorm(n*q,sd = 1/4),n,q)
 #' res <- ddsPLS(X,Y,verbose=FALSE)
-#' pre <- predict(res,X_test = X_test,toPlot = T,doDiagnosis = T)
+#' pre <- predict(res,X_test = X_test,toPlot = TRUE,doDiagnosis = TRUE)
 #'
 #' @seealso \code{\link{ddsPLS}}, \code{\link{plot.ddsPLS}}, \code{\link{summary.ddsPLS}}
 #'

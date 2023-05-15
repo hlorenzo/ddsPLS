@@ -50,6 +50,9 @@ bootstrap_Rcpp(
 
 \item{lambda0}{The minimum value to be checked in lambdas.}
 }
+\value{
+The bootstrapped statistics
+}
 \description{
 Start the bootstrap operations.
 Should not be used by user.
