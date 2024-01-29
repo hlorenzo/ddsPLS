@@ -11,7 +11,7 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Depends: foreach, flsa, R (>= 2.10)
-Imports: Rcpp (>= 1.0.5), doParallel, shiny
+Imports: Rcpp (>= 1.0.5), doParallel, shiny, RColorBrewer
 LinkingTo: Rcpp, RcppEigen
 Suggests: 
     knitr,

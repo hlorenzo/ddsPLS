@@ -78,8 +78,12 @@ bootstrapWrap <- function(U,V,X,Y,lambdas,lambda_prev,
 #' @return A list with different interesting output describing the built model
 #' @export
 #' @importFrom foreach %dopar%
-#' @importFrom flsa flsa
+#' @importFrom foreach foreach
 #' @importFrom foreach %do%
+#' @importFrom flsa flsa
+#' @importFrom parallel makeCluster
+#' @importFrom parallel stopCluster
+#' @importFrom doParallel registerDoParallel
 #'
 #' @examples
 #' # n <- 100 ; d <- 2 ; p <- 20 ; q <- 2

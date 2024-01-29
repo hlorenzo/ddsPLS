@@ -4,30 +4,12 @@
 \alias{print.ddsPLS}
 \title{Function to sum up bootstrap performance results of the ddsPLS algorithm}
 \usage{
-\method{print}{ddsPLS}(
-  object,
-  return,
-  plotSelection,
-  las,
-  cex.names,
-  digits = max(3L, getOption("digits") - 3L),
-  ...
-)
+\method{print}{ddsPLS}(x, ...)
 }
 \arguments{
-\item{return}{Wether or not to return the printed values, default to FALSE.}
-
-\item{plotSelection}{boolean. Whether plot the selection variables.}
-
-\item{las}{interger. Parameter for angle of variable names.}
-
-\item{cex.names}{real positive. Which factor zomm the variable names.}
-
-\item{digits}{integer indicating the number of decimal places (round) to be used.}
+\item{x}{A ddsPLS object.}
 
 \item{...}{Other parameters to be taken into account.}
-
-\item{x}{A ddsPLS object.}
 }
 \description{
 Function to sum up bootstrap performance results of the ddsPLS algorithm

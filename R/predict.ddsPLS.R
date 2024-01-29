@@ -1,6 +1,6 @@
 #' Function to predict from ddsPLS objects
 #'
-#' @param x ddsPLS object.
+#' @param object A ddsPLS object.
 #' @param X_test matrix, a test data-set. If is "NULL", the default value,
 #' the predicted values for the train test are returned.
 #' @param toPlot boolean, wether or not to plot the extreme value test plot.

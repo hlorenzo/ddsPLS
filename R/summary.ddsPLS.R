@@ -1,11 +1,6 @@
 #' Function to sum up bootstrap performance results of the ddsPLS algorithm
 #'
 #' @param x A ddsPLS object.
-#' @param return Wether or not to return the printed values, default to FALSE.
-#' @param plotSelection boolean. Whether plot the selection variables.
-#' @param las interger. Parameter for angle of variable names.
-#' @param cex.names real positive. Which factor zomm the variable names.
-#' @param digits integer indicating the number of decimal places (round) to be used.
 #' @param ... Other parameters to be taken into account.
 #'
 #' @export
@@ -13,10 +8,8 @@
 #' @seealso \code{\link{ddsPLS}}, \code{\link{plot.ddsPLS}}, \code{\link{predict.ddsPLS}}
 #'
 #' @useDynLib ddsPLS
-print.ddsPLS <- function(object, return, plotSelection, las, cex.names,
-                         digits = max(3L, getOption("digits") - 3L), ...)
+print.ddsPLS <- function(x, ...)
 {
-  x <- object
   cat("\nCall:\n",
       paste(deparse(x$call), sep = "\n", collapse = "\n"), "\n\n", sep = "")
   h_opt <- x$R

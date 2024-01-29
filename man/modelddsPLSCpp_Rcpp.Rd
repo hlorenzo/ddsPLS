@@ -24,6 +24,8 @@ modelddsPLSCpp_Rcpp(U, V, X, Y, lambdas, R, n, p, q, lambda0)
 \item{p}{The number of variables of X part.}
 
 \item{q}{The number of variables of Y part.}
+
+\item{lambda0}{The vector of regulation parameters.}
 }
 \description{
 Build a ddsPLS model once the bootstrap operations has allowed to find a correct lambda.

@@ -13,6 +13,7 @@
 #' @param n The number of observations.
 #' @param p The number of variables of X part.
 #' @param q The number of variables of Y part.
+#' @param lambda0 The vector of regulation parameters.
 #'
 modelddsPLSCpp_Rcpp <- function(U, V, X, Y, lambdas, R, n, p, q, lambda0) {
     .Call('_ddsPLS_modelddsPLSCpp_Rcpp', PACKAGE = 'ddsPLS', U, V, X, Y, lambdas, R, n, p, q, lambda0)

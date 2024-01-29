@@ -3,6 +3,10 @@
 #' @param ... Same parameters as ddsPLS
 #'
 #' @return Mainly visual objects, also possible to save plots
+#'
+#' @importFrom shiny actionButton br checkboxInput eventReactive fileInput fluidPage h2 h3 icon mainPanel navbarPage numericInput plotOutput radioButtons reactive renderPlot renderPrint renderTable renderText req safeError selectInput shinyApp sidebarLayout sidebarPanel tabPanel tableOutput tabsetPanel tags textInput textOutput titlePanel updateSelectInput verbatimTextOutput
+#'
+#'
 #' @export
 #'
 ddsPLS_App <- function(...) {
@@ -40,7 +44,7 @@ ddsPLS_App <- function(...) {
                matrix(rnorm(n*p2,sd=sd2),byrow = FALSE,nrow = n))
     list(x1[,-c(1:p1_1)],x2,y)
   }
-  cols_gps <- RColorBrewer::brewer.pal(5,"Set1")
+  cols_gps <- brewer.pal(5,"Set1")
   ui <- fluidPage(
     #=======================================
     navbarPage("ddsPLS (data-driven Sparse PLS)",

@@ -5,7 +5,7 @@
 \title{Function to predict from ddsPLS objects}
 \usage{
 \method{predict}{ddsPLS}(
-  x,
+  object,
   X_test = NULL,
   toPlot = FALSE,
   doDiagnosis = T,
@@ -16,7 +16,7 @@
 )
 }
 \arguments{
-\item{x}{ddsPLS object.}
+\item{object}{A ddsPLS object.}
 
 \item{X_test}{matrix, a test data-set. If is "NULL", the default value,
 the predicted values for the train test are returned.}

@@ -116,6 +116,7 @@ plot.ddsPLS <- function(x,type="criterion",
       allY <- rep(0,q)
       allX[x$Selection$X] <- 1
       allY[x$Selection$Y] <- 1
+      selY <- x$Selection$Y
       if(is.null(rownames(x$model$U))){
         names(allX) <- paste("X",1:p,sep="")
       }
@@ -123,8 +124,10 @@ plot.ddsPLS <- function(x,type="criterion",
            main=paste("Which variables are selected in block X ?"),
            yaxt="n",xaxt="n",ylim=c(0,1),col=1+allX,pch=16+allX)
       axis(2,at = c(0,1),labels = c("No","Yes"),las=2)
+      par(las=las)
       axis(1,at = 1:length(allX),labels = names(allX),
-           las=las,cex.axis=cex.names)
+           cex.axis=cex.names)
+      par(las=0)
       p_app <- 5*((p-p%%5)/5+1)
       ltys <- rep(2,p_app)
       ltys[5*(0:(p_app/5))] <- 1
@@ -136,8 +139,9 @@ plot.ddsPLS <- function(x,type="criterion",
            main=paste("Which variables are selected in block Y ?"),
            yaxt="n",xaxt="n",ylim=c(0,1),col=1+allY,pch=16+allY)
       axis(2,at = c(0,1),labels = c("No","Yes"),las=2)
-      axis(1,at = 1:length(selY),labels = names(selY),
-           las=las,cex.axis=cex.names)
+      par(las=las)
+      axis(1,at = 1:length(selY),labels = names(selY),cex.axis=cex.names)
+      par(las=0)
       q_app <- 5*((q-q%%5)/5+1)
       ltys <- rep(2,q_app)
       ltys[5*(0:(q_app/5))] <- 1

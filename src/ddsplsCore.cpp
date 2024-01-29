@@ -632,6 +632,7 @@ ddsPLSCpp bootstrap_pls_CT_Cpp(const Eigen::MatrixXd X_init,const Eigen::MatrixX
 //' @param n The number of observations.
 //' @param p The number of variables of X part.
 //' @param q The number of variables of Y part.
+//' @param lambda0 The vector of regulation parameters.
 //'
 // [[Rcpp::export]]
 Rcpp::List  modelddsPLSCpp_Rcpp(const Eigen::MatrixXd U,const Eigen::MatrixXd V,
