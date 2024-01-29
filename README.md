@@ -1,30 +1,32 @@
-# Data Driven Sparse PLS (**ddsPLS**)
+# Data Driven Sparse PLS(**ddsPLS**)
 
-**ddsPLS** is a sparse PLS formulation for mono and multi-block data sets with missing samples.
+**ddsPLS** is a sparse PLS formulation based on soft-thresholding estimations of covariance matrices.
 
 ## Installation
 
-There are two alternative ways to install **ddsPLS**
+There is currently one way to install **ddsPLS**
 
-  * From the **CRAN** thanks to 
-  
-  ```r
-  install.packages("ddsPLS")
-  ```
-  
   * From the under development repository from GitHub thanks to `devtools`
-  
+
   ```r
   # install.packages("devtools")
-  devtools::install_github("hlorenzo/ddsPLS")
+  devtools::install_github("hlorenzo/ddsPLS", build_vignettes = TRUE)
   ```
-
-Once that package is installed, you can access the vignette using that command
+  
+Once that package is installed, you can access the vignette using that command.
 
   ```r
   vignette("ddsPLS")
   ```
+  
+It is also possible to start a built in applet using 
 
-or that vignette is also acessible here <https://hadrienlorenzo.netlify.com/html/ddsPLS.html>.
+  ```r
+  ddsPLS_App()
+  ```
 
-Some examples and applications are accessible on <https://hadrienlorenzo.netlify.com/>.
+and it should start an interactive interface which should look like
+
+![ddsPLS applet](appCrop.png)
+
+Thanks for using!
