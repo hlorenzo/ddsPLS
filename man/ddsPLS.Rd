@@ -14,7 +14,6 @@ ddsPLS(
   n_B = 50,
   n_lambdas = 100,
   lambda_roof = NULL,
-  gamma = NULL,
   lowQ2 = 0,
   NCORES = 1,
   errorMin = 1e-09,
@@ -56,9 +55,6 @@ Default to \code{50}.}
 only if \code{lambdas} is \code{NULL}. Default to 100.}
 
 \item{lambda_roof}{limit value to be considered in the optimization.}
-
-\item{gamma}{real parameter between 0 and 1 to control the fusion of the
-coefficients. Not used in validation.}
 
 \item{lowQ2}{real, the minimum value of Q^2_B to accept the
 current lambda value. Default to \code{0.0}.}

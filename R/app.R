@@ -105,7 +105,7 @@ ddsPLS_App <- function(...) {
                               ),
                               tabPanel(
                                 title = "Vizualisations",
-                                numericInput('gamma', 'Fusion coefficient (gamma)',0.0,min=0.0,max=100.0,step = 0.1),
+                                # numericInput('gamma', 'Fusion coefficient (gamma)',0.0,min=0.0,max=100.0,step = 0.1),
                                 selectInput('plo', 'Type of vizualization', vizu),
                                 selectInput('pos', 'Legend position', pospos),
                                 numericInput('sizeplot', 'Size of plot (pixels)',600,min=200,max=3000,step = 100),
@@ -154,9 +154,9 @@ ddsPLS_App <- function(...) {
     sizeplot <- reactive({
       input$sizeplot
     })
-    gamma <- reactive({
-      input$gamma
-    })
+    # gamma <- reactive({
+    #   input$gamma
+    # })
     sizeplot2 <- reactive({
       input$sizeplot2
     })
@@ -329,14 +329,14 @@ ddsPLS_App <- function(...) {
     output$plot2 <- renderPlot({
       mo <- model()
       if(is.null(mo)) mo <- modelAnal()
-      if(gamma()!=0)
-      {
-        x <- as.matrix(do.call(cbind,datasR()$Xs))
-        y <- as.matrix(datasR()$Y)
-        lambda_gamma <- mo$lambda
-        mo <- ddsPLS(x,y,lambdas = lambda_gamma,gamma=gamma(),
-                     NCORES=1,verbose =F,doBoot = F)
-      }
+      # if(gamma()!=0)
+      # {
+      #   x <- as.matrix(do.call(cbind,datasR()$Xs))
+      #   y <- as.matrix(datasR()$Y)
+      #   lambda_gamma <- mo$lambda
+      #   mo <- ddsPLS(x,y,lambdas = lambda_gamma,gamma=gamma(),
+      #                NCORES=1,verbose =F,doBoot = F)
+      # }
       noModel <- mo$R==0
       if(!noModel){
         colo <- datasR()$colsReal

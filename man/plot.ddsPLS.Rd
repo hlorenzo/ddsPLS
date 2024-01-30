@@ -11,6 +11,7 @@
   legend.position = "topright",
   horiz = TRUE,
   biPlot = FALSE,
+  las = 0,
   col = NULL,
   cex.names = 1,
   mar = c(5, 4, 4, 2) + 0.1,
@@ -31,6 +32,8 @@
 \item{horiz}{boolean. Whether to plot horizontally.}
 
 \item{biPlot}{boolean wether or not to plot one component versus the other.}
+
+\item{las}{numeric in (0,1,2,3): the style of axis labels.}
 
 \item{col}{vector. Mainly to modify bars in weight plots.}
 

@@ -5,7 +5,6 @@ S3method(summary,ddsPLS)
 export(ddsPLS)
 export(ddsPLS_App)
 importFrom(Rcpp, evalCpp)
-importFrom(flsa,flsa)
 importFrom(foreach,"%do%")
 importFrom(foreach,"%dopar%")
 importFrom("graphics", "abline", "axis", "barplot", "image", "legend","matplot",

@@ -66,8 +66,6 @@ bootstrapWrap <- function(U,V,X,Y,lambdas,lambda_prev,
 #' @param n_lambdas integer, the number of lambda values. Taken into account
 #' only if \code{lambdas} is \code{NULL}. Default to 100.
 #' @param lambda_roof limit value to be considered in the optimization.
-#' @param gamma real parameter between 0 and 1 to control the fusion of the
-#' coefficients. Not used in validation.
 #' @param lowQ2  real, the minimum value of Q^2_B to accept the
 #' current lambda value. Default to \code{0.0}.
 #' @param NCORES integer, the number of cores used. Default to \code{1}.
@@ -80,7 +78,6 @@ bootstrapWrap <- function(U,V,X,Y,lambdas,lambda_prev,
 #' @importFrom foreach %dopar%
 #' @importFrom foreach foreach
 #' @importFrom foreach %do%
-#' @importFrom flsa flsa
 #' @importFrom parallel makeCluster
 #' @importFrom parallel stopCluster
 #' @importFrom doParallel registerDoParallel
@@ -101,11 +98,11 @@ bootstrapWrap <- function(U,V,X,Y,lambdas,lambda_prev,
 ddsPLS <- function(X,Y,criterion="diffR2Q2",
                    doBoot=TRUE,LD=FALSE,
                    lambdas=NULL,n_B=50,n_lambdas=100,lambda_roof=NULL,
-                   gamma=NULL,
                    lowQ2=0.0,NCORES=1,errorMin=1e-9,verbose=FALSE){
   get_fused <- function(sigma_k,lambda1,lambda2)
   {
-    m2 <- c(flsa(sigma_k,lambda1=0,lambda2 = lambda2))
+    # m2 <- c(flsa(sigma_k,lambda1=0,lambda2 = lambda2))
+    m2 <- sigma_k
     m1 <- abs(m2)-lambda1
     m1[which(m1<0)] <- 0
     m1 <- m1*sign(m2)
@@ -119,6 +116,7 @@ ddsPLS <- function(X,Y,criterion="diffR2Q2",
     }
     mean(unlist(lapply(1:q,function(j){getLambda0(xSC,ySC[,j],n,p,q)})))
   }
+  gamma <- 0
   if(criterion %in% c("diffR2Q2","Q2")){
     call <- match.call()
     n <- nrow(Y)

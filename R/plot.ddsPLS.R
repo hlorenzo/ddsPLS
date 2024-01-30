@@ -11,6 +11,7 @@
 #' @param mar vector. The margins for the plot.
 #' @param cex.names double. Size factor for variable names.
 #' @param biPlot boolean wether or not to plot one component versus the other.
+#' @param las numeric in (0,1,2,3): the style of axis labels.
 #' @param ... Other plotting parameters to affect the plot.
 #'
 #' @importFrom graphics layout
@@ -23,11 +24,12 @@ plot.ddsPLS <- function(x,type="criterion",
                         digits=1,
                         legend.position="topright",
                         horiz=TRUE,biPlot=FALSE,
+                        las=0,
                         col=NULL,
                         cex.names=1,mar=c(5, 4, 4, 2) + 0.1,
                         ...){
   ## Reset personnal plot par() settings
-  opar <- par(no.readonly =TRUE)
+  opar = opar_las <- par(no.readonly =TRUE)
   on.exit(par(opar))
   ## -----------------------------------
   h_opt <- x$R
@@ -124,10 +126,12 @@ plot.ddsPLS <- function(x,type="criterion",
            main=paste("Which variables are selected in block X ?"),
            yaxt="n",xaxt="n",ylim=c(0,1),col=1+allX,pch=16+allX)
       axis(2,at = c(0,1),labels = c("No","Yes"),las=2)
-      par(las=las)
+      opar_las = opar_previous <- par(no.readonly =TRUE)
+      opar_las$las <- las
+      par(opar_las)
       axis(1,at = 1:length(allX),labels = names(allX),
            cex.axis=cex.names)
-      par(las=0)
+      par(opar_previous)
       p_app <- 5*((p-p%%5)/5+1)
       ltys <- rep(2,p_app)
       ltys[5*(0:(p_app/5))] <- 1
@@ -139,9 +143,11 @@ plot.ddsPLS <- function(x,type="criterion",
            main=paste("Which variables are selected in block Y ?"),
            yaxt="n",xaxt="n",ylim=c(0,1),col=1+allY,pch=16+allY)
       axis(2,at = c(0,1),labels = c("No","Yes"),las=2)
-      par(las=las)
+      opar_las = opar_previous <- par(no.readonly =TRUE)
+      opar_las$las <- las
+      par(opar_las)
       axis(1,at = 1:length(selY),labels = names(selY),cex.axis=cex.names)
-      par(las=0)
+      par(opar_previous)
       q_app <- 5*((q-q%%5)/5+1)
       ltys <- rep(2,q_app)
       ltys[5*(0:(q_app/5))] <- 1
